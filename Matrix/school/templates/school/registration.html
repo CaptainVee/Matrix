@@ -1,0 +1,17 @@
+{% extends "school/base.html" %}
+{% block content %}
+	<title>Local Schools</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	    crossorigin="anonymous">
+	</head>
+	<body>
+	<div class="container">
+		<h1>Choose a School</h1>
+		{% for school in schools %}
+			<p><a class="btn btn-primary btn-lg" href="{% url 'school-map'%}">{{school.name}}</a></p>
+		{% endfor %}
+	</div>
+	</body>
+
+{% endblock content %}
