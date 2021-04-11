@@ -67,7 +67,7 @@ def register():
 
     accountNumber = generationAccountNumber()
 
-    database[accountNumber] = [ first_name, last_name, email, password ]
+    database[accountNumber] = [ first_name, last_name, email, password, 1000 ]
 
     print("Your Account Has been created")
     print(" == ==== ====== ===== ===")
@@ -81,19 +81,19 @@ def bankOperation(user):
 
     print("Welcome %s %s " % ( user[0], user[1] ) )
 
-    selectedOption = int(input("What would you like to do? (1) deposit (2) withdrawal (3) Customer Service (4) Logout (5) Exit \n"))
+    selectedOption = int(input("What would you like to do? (1) Deposit (2) Withdrawal (3) Customer Service (4) Account Balance (5) Exit \n"))
 
     if(selectedOption == 1):
-        depositOperation()
+        depositOperation(user)
 
     elif(selectedOption == 2):
-        withdrawalOperation()
+        withdrawalOperation(user)
 
     elif(selectedOption == 3):
         customerServiceOperation()
 
     elif(selectedOption == 4):
-        login()
+        acct_balance(user)
 
     elif(selectedOption == 5):
         pass
@@ -103,21 +103,31 @@ def bankOperation(user):
         bankOperation(user)
 
 
-def withdrawalOperation():
+def withdrawalOperation(user):
     print("withdrawal")
     amount = int(input('How much would you like to withdraw?\n'))
-    print('Take your cash %s' %amount)
+    if int(user[4]) < amount:
+
+        print('Insufficient Funds')
+        print('your current balance is %s' %user[4])
+    else:
+        user[4] = int(user[4]) - amount
+        print('Take your cash %s' %amount)
+        print('Your remaining balance is %s' %user[4])
 
 
-def depositOperation():
+def depositOperation(user):
     print("Deposit Operations")
     amount = int(input('How much would you like to deposit?\n'))
-    print('Your current balance is %s' % amount)
+    user[4] = amount + int(user[4])
+    print('Your current balance is %s' % user[4])
 
 def customerServiceOperation():
     issue = input('What issue will you like to report?\n')
     print('Thank you for contacting us, we would get back to you shortly\n')
-    
+
+def acct_balance(user):
+    print('Your account balance is %s' %user[4])
 
 def generationAccountNumber():
     return random.randrange(1111111111,9999999999)
